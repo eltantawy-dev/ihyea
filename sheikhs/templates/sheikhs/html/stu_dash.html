@@ -1,0 +1,150 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}طلاب الموعد{% endblock %}
+
+{% block css %}<link href="{% static 'students/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/sheikh_dash">الصفحة الرئيسية</a></li>
+            <li><a href="/sheikh_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/sheikh_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+<div class="student-dash">
+    <section class="container">
+        <section>
+            <div class="stuinfo ">
+                <div class="info">
+                    <div>
+                        <i class="fa-solid fa-circle-user"></i>
+                    </div>
+                    <div class="text">
+                        <h3>{{student.user.name}}</h3>
+                        <p class="tele" style="max-width: 30vw; overflow: hidden;">
+                            <i class="fa-brands fa-telegram"></i>
+                            <a href="https://t.me/{{student.user.tele}}">@{{student.user.tele}}</a>
+                        </p>
+                        <p class="Batch">
+                            <i class="fa-solid fa-users"></i>
+                            {{student.track}}
+                        </p>
+                        <p class="sheikh">
+                            <i class="fa-solid fa-chart-simple"></i>
+                            {{student.status}}
+                        </p>
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="circular" id="progress-circular">
+                        <div class="inner-circle">
+                        <span id="progress-num">{{student.progress}}%</span>
+                        </div>
+                    </div>
+                    <p>نسبة التقدم</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="extra-info">
+            <div class="extra-container">
+                <div class="info">
+                    <h4>المحفوظ حاليا</h4>
+                    <p>{% if student.nsap%} {{student.nsap}} {%else%} 0 {%endif%}صفحة</p>
+                </div>
+                <div class="info">
+                    <h4>آخر درجة</h4>
+                    <p>{{last_score}}%</p>
+                </div>
+                <div class="info">
+                    <h4>الاختبار القادم</h4>
+                    <p>{{student.nextExam}}</p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <div class="stu-exam-log">
+
+            <section>
+                <h2>سجل الاختبارات</h2>
+                    {% if exam_log%}
+
+                    <table class="stu-exam-log">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>المرحلة</th>
+                                <th>النصاب</th>
+                                <th>الدرجة</th>
+                                <th>الحفظ</th>
+                                <th>التجويد</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for exam in exam_log %}
+                            <tr id="exam-tr">
+                                <td class="hijri-date">{{exam.hijriDate}}</td>
+                                <td class="stage">مرحلة {{exam.stage.order}}</td>
+                                <td class="nsap">{{exam.nsap}} صفحة</td>
+                                <td class="percentage">{{exam.percentage}}%</td>
+                                <td class="memorization">{{exam.memorization_level}}</td>
+                                <td class="tajweed">{{exam.tajweed_level}}</td>
+                                {%if exam.percentage %}
+                                <td class="more"><a href="/sheikh_dash/date_view/{{exam.id}}">المزيد</a></td>
+                                {%else%}
+                                <td class="more not">معلق</td>
+                                {%endif%}
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+
+
+
+                    {% else %}
+
+                    <div>
+                        <p style="padding-bottom: 25px;">سجله فارغ</p>
+                    </div>
+
+
+                    {%endif%}
+
+            </section>
+        </div>
+
+    </section>
+</div>
+
+
+{% endblock %} 
+
+{% block js %}<script src="{% static 'students/js/index.js' %}"></script>{% endblock %}

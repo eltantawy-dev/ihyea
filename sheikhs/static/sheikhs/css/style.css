@@ -1,0 +1,327 @@
+:root {
+  --main-color: #1E3A34;     
+  --secondary-color: #D1BFA7; 
+  --accent-color: #A98743;   
+  --text-color: #2E2E2E;      
+  --background-color: #F4FBF4;
+  --hover-color: #FFD700;
+  --warn-color: #e6a8a1;
+}
+
+@font-face {
+    font-family: 'Uthmanic';
+    src: url('/static/fonts/UthmanicHafs_V20.ttf') format('truetype');
+}
+
+
+
+.dates-table .date {
+    grid-area: date;
+}
+.dates-table .time {
+    grid-area: time;
+}
+.dates-table .stu-num {
+    grid-area: snum;
+}
+.dates-table .stu-remain {
+    grid-area: remain;
+}
+.dates-table .stu {
+    grid-area: stu;
+}
+
+
+
+@media (max-width: 768px) {
+    .dates-table tbody tr{
+        grid-template-areas: "date date" "time time" "snum remain" "stu stu";
+    }
+    .dates-table tbody tr .date{
+        font-size: 24px;
+        margin: 5px;
+        font-weight: 500;
+    }
+    .dates-table tbody tr .stu-num::before{
+        content: "الطلاب: ";
+        display: inline-block;
+    }
+    .dates-table tbody tr .stu-remain::before {
+        content: "المتاح: ";
+        display: inline-block;
+    }
+    .dates-table tbody tr .time::before {
+        content: "الوقت: ";
+        display: inline-block;
+    }
+}
+
+
+
+/* 
+
+*/
+
+
+.sheikh-dash {
+    background-color: var(--background-color);
+
+}
+.sheikh-dash .sheikh-head {
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+}
+.sheikh-dash .sheikh-head h3 {
+    text-align: right;
+    margin: 0 25px 25px;
+    font-size: 25px;
+}
+.sheikh-dash .sheikh-head .quote {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    width: 70%;
+    margin: auto;
+    border-radius: 8px;
+}
+.sheikh-dash .sheikh-head .quote i:first-child{
+    margin: 15px 15px 15px auto;
+}
+.sheikh-dash .sheikh-head .quote div {
+    margin: 0 25px;
+}
+.sheikh-dash .sheikh-head .quote div p {
+    font-family: 'Uthmanic';
+}
+.sheikh-dash .sheikh-head .quote div p:first-child {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.sheikh-dash .sheikh-head .quote div p:last-child {
+    margin-top: 10px;
+    font-size: 15px;
+}
+.sheikh-dash .sheikh-head .quote i:last-child {
+    margin: 15px auto 15px 15px;
+}
+.sheikh-dash .item {
+    background-color: var(--secondary-color);
+    margin: 20px auto;
+    max-width: 350px;
+    min-width: 250px;
+    height: 100px;
+}
+
+
+
+.sheikh-sec2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    justify-content: center;
+}
+.sheikh-sec2 .sec2-items {
+    background-color: var(--secondary-color);
+    margin: 20px auto;
+    width: 50%;
+    height: 150px;
+    max-width: 300px;
+    border-radius: 8px;
+}
+.sheikh-sec2 .sec2-items .s-item {
+    padding: 0 20px;
+    margin: 52px 0;
+}
+.sheikh-sec2 .sec2-items .s-item .s-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sheikh-sec2 .sec2-items .s-item .s-cont p:first-of-type {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+.sheikh-sec2 .sec2-items .s-item .s-cont p:last-of-type {
+    margin: 5px;
+}
+.sheikh-sec2 .sec2-items .s-item .s-cont .sec2-i {
+    background-color: var(--accent-color);
+    padding: 8px;
+    border-radius: 50%;
+}
+.sheikh-sec2 .sec2-items .s-item .s-cont .sec2-i i {
+    font-size: 22px;
+    color: var(--main-color);
+}
+
+
+.sheikh-sec2 .s-cont:hover  {
+    color: var(--hover-color);
+}
+
+
+
+/* 
+
+*/
+
+
+.date-stu {
+    background-color: var(--background-color);
+    min-height: calc(100vh - 50px);
+}
+.date-stu-table .name {
+    grid-area: name;
+}
+.date-stu-table .nsap {
+    grid-area: nsap;
+}
+.date-stu-table .track {
+    grid-area: track;
+}
+.date-stu-table .tele {
+    grid-area: tele;
+}
+.date-stu-table .res {
+    grid-area: res;
+}
+
+
+
+@media (max-width: 768px) {
+    .date-stu-table tbody tr{
+        grid-template-areas: "name tele" "nsap track" "res res" ;
+    }
+    .date-stu-table tbody tr .status{
+        display: none;
+    }
+    .date-stu-table tbody tr .nsap::before{
+        content: "النصاب: ";
+        display: inline-block;
+    }
+
+    .date-stu-table tbody tr .tele i{
+        font-size: 30px;
+        color: var(--main-color);
+    }
+    .date-stu-table tbody tr .tele i:hover {
+        color: #74C0FC;
+    }
+    
+    .date-stu-table tbody tr .name {
+        font-size: 23px;
+        font-weight: 600;
+    }
+    .date-stu-table tbody tr .time::before {
+        content: "الوقت: ";
+        display: inline-block;
+    }
+}
+
+
+/* 
+
+
+*/
+
+
+.stu-res {
+    background-color: var(--background-color);
+}
+.stu-res .que-table {
+    margin-top: 35px;
+}
+.stu-res .que-table tbody td {
+    border: none;
+}
+.stu-res .que-table tbody td input {
+    margin: auto;
+}
+
+
+@media (max-width: 768px) {
+    .stu-res .que-table {
+        display: table;
+    }
+    .stu-res .que-table thead {
+        display: table-header-group;
+    }
+
+    .stu-res .que-table tbody tr {
+        display: table-row;
+    }
+    
+}
+
+
+
+
+
+/* 
+
+
+*/
+
+
+.com-exam-log tbody .hijri-date {
+    grid-area: hijri;
+}
+.com-exam-log tbody .student {
+    grid-area: student;
+}
+.com-exam-log tbody .score {
+    grid-area: score;
+}
+.com-exam-log tbody .memorization {
+    grid-area: memorization;
+}
+.com-exam-log tbody .tajweed {
+    grid-area: tajweed;
+}
+.com-exam-log tbody .view {
+    grid-area: view;
+}
+.com-exam-log tbody .edit {
+    grid-area: edit;
+}
+
+
+
+@media (max-width: 768px) {
+    .com-exam-log tbody tr {
+        grid-template-areas:
+        "hijri hijri hijri"
+        "student . score "
+        "memorization . tajweed"
+        "view . edit";
+    }
+    
+    .com-exam-log tbody .hijri-date {
+        font-weight: 700;
+    }
+    .com-exam-log tbody .score {
+        background-color: var(--secondary-color);
+        width: min-content;
+        margin: auto;
+        border-radius: 50%;
+    }
+    .com-exam-log tbody .memorization {
+        margin: auto 0;
+        padding: 10px 5px;
+    }
+    .com-exam-log tbody .memorization::before {
+        content: "الحفظ: ";
+        display: inline-block;
+    }
+    .com-exam-log tbody .tajweed {
+        margin: auto 0;
+        padding: 10px 5px;
+    }
+    .com-exam-log tbody .tajweed::before {
+        content: "التجويد: ";
+        display: inline-block;
+    }
+}

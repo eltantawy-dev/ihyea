@@ -1,0 +1,77 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block css %}<link href="{% static 'students/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/student_dash">صفحتك الرئيسية</a></li>
+            <li><a href="profile">ملفك الشخصي</a></li>
+            <li><a href="editprofile">تعديل الملف</a></li>
+            <li><a href="/FAQ">الأسئلة الشائعة</a></li>
+
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+    <div class="note">
+        <i class="fa-solid fa-bell" id="note-i"></i>
+        <div class="triangle" id="note-triangle"></div>
+        {% csrf_token %}
+        <ul id="note-ul">
+            {% for note in notes %}
+                <li onclick="readAndI({{note.id}})" class = "li-{{note.is_read}}-read-note" id="note-{{note.id}}">
+                    <h4>{{note.title}}</h4>
+                    <p>{{note.message}}</p>
+                    <p>{{note.hijri_created_at}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+{% block content %}
+<div class="excuse-stu">
+    <section class="container">
+
+        <h2>تقديم عذر</h2>
+
+        <form method="post">
+        {% csrf_token %}
+
+
+        <div>
+            <label for="{{ excuse_form.type_excuse.id_for_label }}">نوع العذر</label>
+            {{ excuse_form.type_excuse }}
+            {{ excuse_form.type_excuse.errors }}
+        </div>
+
+        <div>
+            <label for="{{ excuse_form.message.id_for_label }}">الرسالة</label>
+            {{ excuse_form.message.as_textarea }}
+            {{ excuse_form.message.as_textarea.errors }}
+        </div>
+
+        <input type="submit" value="إرسال">
+        </form>
+
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,509 @@
+
+
+/* 
+==================================
+
+            الرئيسية
+
+==================================
+*/
+
+
+.student-dash, .profile {
+    background-color: var(--background-color);
+}
+
+.student-dash .stuinfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 20px;
+    max-width: 100%;
+    background-color: var(--secondary-color)
+}
+.student-dash .stuinfo .info {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.student-dash .stuinfo .info div {
+    display: flex;
+}
+.student-dash .stuinfo .info div .fa-circle-user {
+    font-size: 50px;
+    margin: auto 0;
+    color: var(--main-color);
+}
+.student-dash .stuinfo .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.student-dash .stuinfo .text h3{
+    text-align: right
+}
+.student-dash .stuinfo .text p {
+    text-align: right;
+}
+.student-dash .stuinfo .text p i {
+    text-align: right;
+    color: var(--main-color);
+}
+
+
+
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.circular {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+}
+
+.inner-circle {
+  width: 70px;
+  height: 70px;
+  background-color: var(--background-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  font-weight: bold;
+  font-size: 20px;
+  color: #8b3a3a;
+}
+
+
+
+
+
+.extra-info .extra-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 20px 0;
+    max-width: 900px;
+    margin: auto;
+}
+
+.extra-info .extra-container .info {
+    width: 70%;
+    margin: auto;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 10px 0;
+}
+
+
+
+.next-book h2 {
+    margin: 25px;
+}
+.next-book .bookdetail {
+    max-width: 350px;
+    margin: auto;
+    border: 1px solid var(--accent-color);
+    padding: 20px;
+    border-radius: 7px;
+}
+.next-book .bookdetail i {
+    font-size: 30px;
+    color: var(--main-color);
+}
+
+.next-book .bookdetail .row-1{
+    margin: 15px 0;
+}
+.next-book .bookdetail .row-1 h3{
+    font-size: 23px;
+}
+.next-book .bookdetail .row-1 p{
+    margin: 5px;
+}
+
+.next-book .bookdetail .row-2 p:first-child{
+    font-size: 20px;
+    margin-top: 35px;
+}
+
+.next-book .bookdetail .row-2 p:last-child{
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.next-book .bookdetail .delete-data{
+    margin: 0;
+    padding: 0;
+}
+.next-book .bookdetail .delete-data input{
+    background-color: var(--warn-color);
+}
+
+
+
+.stu-not-act {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 80%;
+    margin: auto;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 7px;
+}
+.stu-not-act p {
+    color: var(--main-color);
+    font-size: 22px;
+}
+
+.stu-shortcut {
+    padding-bottom: 30px;
+
+}
+.stu-shortcut h2 {
+    font-size: 23px;
+}
+.stu-shortcut div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.stu-shortcut div a {
+    padding: 15px;
+    background-color: var(--main-color);
+    margin: 5px;
+    color: var(--accent-color);
+    max-width: 330px;
+    width: 75%;
+    border-radius: 5px;
+}
+.stu-shortcut div a:hover {
+    color: var(--hover-color);
+}
+
+
+
+/* 
+==================================
+
+          تقديم عذر
+
+==================================
+*/
+
+.excuse-stu {
+    height: calc(100vh - 50px);
+    background-color: var(--background-color);
+}
+
+
+
+/* 
+==================================
+
+          الملف الشخصي
+
+==================================
+*/
+
+
+
+.profile .profile-head {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary-color);
+    height: 200px;
+}
+.profile .profile-head .name {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    align-items: center;
+}
+.profile .profile-head .name i {
+    font-size: 50px;
+    color: var(--main-color);
+}
+.profile .profile-head .name div h3 {
+    text-align: right;
+    font-size: 30px;
+}
+.profile .profile-head .name div p {
+    margin: 5px;
+    font-size: 16px;
+    text-align: right;
+}
+
+.profile .profile-head .bot {
+    display: flex;
+}
+
+.profile .profile-head .bot div {
+    margin: auto;
+}
+
+.profile .profile-head .bot div p {
+    color: var(--main-color);
+}
+
+.profile .profile-head .bot div .fa-circle-check {
+    display: flex;
+    color: var(--main-color);
+    justify-content: center;
+    margin: 15px;
+    font-size: 30px;
+
+}
+.profile .profile-head .bot div .fa-circle-xmark {
+    display: flex;
+    color: #FF0037;
+    justify-content: center;
+    margin: 15px;
+    font-size: 30px;
+}
+
+.profile .profile-head .bot .not:hover {
+    color: var(--hover-color);
+}
+
+.profile .detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-around;
+}
+.profile .detail div {
+    margin: 50px 0;
+}
+.profile .detail div h4{
+    text-align: right;
+}
+.profile .detail div p{
+    text-align: right;
+    margin: 15px 0;
+}
+
+
+.edit-profile {
+    background-color: var(--background-color);
+    height: calc(100vh - 50px);
+}
+
+
+
+/* 
+==================================
+
+          الأسئلة الشائعة
+
+==================================
+*/
+
+
+.faq-container h2 {
+    padding: 30px 0;
+    font-size: 27px;
+}
+
+
+.faq-container .faq-item {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--accent-color);
+    margin-bottom: 20px;
+}
+.faq-container .faq-item .faq-question {
+    text-align: right;
+    font-size: 21px;
+}
+.faq-container .faq-item .faq-answer {
+    text-align: right;
+    margin: 10px;
+    font-size: 17px;
+    line-height: 30px;
+
+}
+
+
+
+/* 
+==================================
+
+         سجل الاختبارات   
+
+==================================
+*/
+
+
+
+.stu-exam-log tbody .hijri-date {
+    grid-area: hijri;
+}
+.stu-exam-log tbody .stage {
+    grid-area: stage;
+}
+.stu-exam-log tbody .nsap {
+    grid-area: nsap;
+}
+.stu-exam-log tbody .percentage {
+    grid-area: percentage;
+}
+.stu-exam-log tbody .memorization {
+    grid-area: memorization;
+}
+.stu-exam-log tbody .tajweed {
+    grid-area: tajweed;
+}
+.stu-exam-log tbody .more {
+    grid-area: more;
+}
+
+
+
+@media (max-width: 768px) {
+    .stu-exam-log tbody tr {
+        grid-template-areas:
+        "hijri hijri percentage"
+        "nsap . stage "
+        "memorization . tajweed"
+        "more more more";
+    }
+    .stu-exam-log tbody tr td {
+        margin: 10px 0;
+        padding-right: 0;
+        padding-left: 0;
+
+    }
+    .stu-exam-log tbody tr .more {
+        display: flex;
+        padding: 0;
+    }
+    .stu-exam-log tbody tr .not {
+        display: flex;
+        color: var(--main-color); 
+        background-color: var(--warn-color);
+        border-radius: 8px;
+        width: fit-content;
+        margin: 15px auto;
+        padding: 10px;
+    }
+    .stu-exam-log tbody tr td a {
+        width: 100%;
+        margin: 0px;
+        background-color: var(--main-color);
+        padding: 10px;
+        border-radius: 8px;
+        color: var(--accent-color);
+    }
+    .stu-exam-log tbody tr td a:hover {
+        color: var(--hover-color);
+    }
+    .stu-exam-log tbody .percentage {
+        width: fit-content;
+        margin: auto;
+        background-color: var(--secondary-color);
+        border-radius: 50%;
+        padding: 12px;
+    }
+    .stu-exam-log tbody .more {
+        background-color: var(--secondary-color);
+        border-radius: 8px;
+    }
+}
+
+
+
+
+/* 
+==================================
+
+            استعراض موعد
+
+==================================
+*/
+
+
+
+
+
+.stu-date-view {
+    padding-bottom: 20px;
+    background-color: var(--background-color);
+}
+
+.stu-date-view .base-detail {
+    display: flex;
+    flex-direction: column;
+}
+.stu-date-view .base-detail .date {
+    margin: 15px 0;
+}
+.stu-date-view .base-detail .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.stu-date-view .base-detail .grid div {
+    margin: 10px 0;
+}
+.stu-date-view .base-detail .grid div p {
+    margin: 10px 0;
+}
+.stu-date-view .base-detail .notes {
+    border: 1px solid var(--secondary-color);
+    margin: auto;
+    width: 80%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.stu-date-view .base-detail .notes h4 , .stu-date-view .base-detail .notes p {
+    text-align: right;
+    margin: 15px;
+    
+}
+
+
+@media (max-width: 768px) {
+   
+    .stu-date-view table {
+        display: table;
+        
+    }
+    .stu-date-view table thead {
+        display: table-header-group;
+        
+    }
+    .stu-date-view table thead {
+        display: table-header-group;
+        
+    }
+    .stu-date-view table tbody tr {
+        display: table-row;
+        
+    }
+    .stu-date-view table tbody tr td {
+        border-top: 1px solid var(--accent-color) !important;
+        border-bottom: 1px solid var(--accent-color) !important;
+
+    }
+    .stu-date-view table tbody td:first-child{
+    border-right: 1px solid var(--secondary-color) !important;
+    }
+    .stu-date-view table tbody td:last-child{
+    border-left: 1px solid var(--secondary-color) !important;
+    }
+    
+}

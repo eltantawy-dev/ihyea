@@ -1,0 +1,181 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+
+
+{% block css %}<link href="{% static 'students/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="profile">ملفك الشخصي</a></li>
+            <li><a href="editprofile">تعديل الملف</a></li>
+            <li><a href="/FAQ">الأسئلة الشائعة</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+    <div class="note">
+        <i class="fa-solid fa-bell" id="note-i"></i>
+        <div class="triangle" id="note-triangle"></div>
+        {% csrf_token %}
+        <ul id="note-ul">
+            {% for note in notes %}
+                <li onclick="readAndI({{note.id}})" class = "li-{{note.is_read}}-read-note" id="note-{{note.id}}">
+                    <h4>{{note.title}}</h4>
+                    <p>{{note.message}}</p>
+                    <p>{{note.hijri_created_at}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="student-dash">
+
+
+    <section>
+        <div class="stuinfo container">
+            <div class="info">
+                <div>
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+                <div class="text">
+                    <h3>{{student.user.name}}</h3>
+                    <p class="tele">
+                        <i class="fa-brands fa-telegram"></i>
+                        <a href="https://t.me/{{student.user.tele}}">@{{student.user.tele}}</a>
+                    </p>
+                    <p class="Batch">
+                        <i class="fa-solid fa-users"></i>
+                        الدفعة {{student.track.batch.name}}
+                    </p>
+                    <p class="sheikh">
+                        <i class="fa-solid fa-user"></i>
+                        الشيخ{% if student.sheikh.user.name%} {{student.sheikh.user.name}} {%else%}: بدون{%endif%}
+                    </p>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="circular" id="progress-circular">
+                    <div class="inner-circle">
+                    <span id="progress-num">{{ progress }}%</span>
+                    </div>
+                </div>
+                <p>نسبة التقدم</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="extra-info">
+        <div class="extra-container">
+            <div class="info">
+                <h4>المحفوظ حاليا</h4>
+                <p>{% if student.nsap%} {{student.nsap}} {%else%} 0 {%endif%}صفحة</p>
+            </div>
+            <div class="info">
+                <h4>آخر درجة</h4>
+                <p>{{last_score}}%</p>
+            </div>
+            <div class="info">
+                <h4>الاختبار القادم</h4>
+                <p>{{next_exam_by_hijri}}</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+
+    <section class="booking-date container">
+
+        {% if is_booking %} 
+            <div class="next-book">
+                <h2>حجزك القادم</h2>
+                <div class="bookdetail">
+                    <i class="fa-solid fa-calendar"></i>
+                    <div class="row-1">
+                        <h3>موعد الشيخ {{student.sheikh.user.name}}</h3>
+                        <p>النصاب: {{student.nsap}} صفحة</p>
+                    </div>
+                    <div class="row-2">
+                        <p>{{next_exam_by_hijri}}</p>
+                        <p>{{remain_time}}</p>
+                    </div>
+                    <form method="post" action="deletedata" class= "delete-data">
+                        {% csrf_token %}
+                        <input type="submit" value="حذف الموعد">
+                    </form>
+                </div>
+            </div>
+            
+
+        {%elif is_booking == False and student.status == "withdrawn" %}
+            <div class="stu-not-act">
+                <p>لقد انسحبت من البرنامج، يسر الله أمرك في غيره.</p>
+            </div>
+
+
+        {%elif is_booking == False and student.status == "excluded" %}
+            <div class="stu-not-act">
+                <p>يؤسفني إخبارك أنه تم إقصائك من البرنامج، وفقك الله في غيره وأعانك.</p>
+            </div>
+
+        {%elif is_booking == False and student.status == "graduated" %}
+            <div class="stu-not-act">
+                <p>لقد تخرجت من البرنامج، بارك الله فيك وأعانك على العمل فيما علمت.</p>
+            </div>
+
+
+        {%else%}
+            <div class="book-form">
+                <form action="" method="post">
+                    {% csrf_token %}
+                        {{book_form}}
+                    <input type="submit" value="حجز الموعد">
+                </form>
+            </div>
+        {% endif %}
+
+    </section>
+
+
+    <section class="stu-shortcut container">
+        <h2>إجراءات سريعة</h2>
+        <div> 
+            <a href="exam_log"> سجل الإختبارات </a>
+            {% if student.sheikh %}
+            <a href="https://t.me/{{student.sheikh.user.tele}}" target="_blank">التواصل مع الشيخ</a>
+            <a href="https://t.me/{{student.sheikh.supervisor.user.tele}}" target="_blank">التواصل مع المشرف</a>
+            {%endif%}
+            <a href="excuse">تقديم عذر</a>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}
+
+{% block js %}<script src="{% static 'students/js/index.js' %}"></script>{% endblock %}

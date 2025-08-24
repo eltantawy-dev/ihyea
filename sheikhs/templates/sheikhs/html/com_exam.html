@@ -1,0 +1,104 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الاختبارات المكتملة{% endblock %}
+
+{% block css %}<link href="{% static 'sheikhs/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/sheikh_dash">الصفحة الرئيسية</a></li>
+            <li><a href="/sheikh_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/sheikh_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="com-exam-log">
+    <section class="container">
+        <h2>الاختبارات المكتملة</h2>
+        <input type="text" class="search-input" id="search_input" placeholder="ابحث عن طالب ...">
+        {% if dates %}
+        <table>
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>الطالب</th>
+                    <th>الدرجة</th>
+                    <th>الحفظ</th>
+                    <th>التجويد</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="com_exams">
+                    {%for date in dates %}
+                        <tr>
+                            <td class="hijri-date">{{date.hijri}}</td>
+                            <td class="student"><a href="/sheikh_dash/my_stu/{{date.date.student.user.code}}">{{date.date.student.user.name}}</a></td>
+                            <td class="score">{{date.score}}</td>
+                            <td class="memorization"> {{date.memorization_level}}</td>
+                            <td class="tajweed"> {{date.tajweed_level}}</td>
+                            <td class="view"><a href="/sheikh_dash/date_view/{{date.date.id}}">استعراض</a></td>
+                            <td class="edit"><a href="/sheikh_dash/date/{{date.date.id}}/{{date.date.student.user.code}}">تعديل</a></td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+        {%else%}
+        <p>لا توجد مواعيد مكتملة</p> 
+        {% endif %}
+    </section>
+</div>
+
+<script>
+    document.getElementById("search_input").addEventListener("input", function () {
+        let quary = this.value;
+
+        fetch(`/sheikh_dash/com_exam?q=${encodeURIComponent(quary)}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data.results)
+            let tbody = document.getElementById("com_exams");
+            tbody.innerHTML = ""
+
+            data.results.forEach(item => {
+                let row = `<tr>
+                    <td>${item.date}</td>
+                    <td>${item.name}</td>
+                    <td>${item.score}</td>
+                    <td>${item.memorization_level}</td>
+                    <td>${item.tajweed_level}</td>
+                    <td><a href = "date/${item.id}/${item.code}">تعديل</a></td>
+                </tr>`;
+                tbody.innerHTML += row
+            })
+        })
+    })
+
+
+</script>
+
+
+
+{% endblock %} 

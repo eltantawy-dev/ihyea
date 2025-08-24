@@ -1,0 +1,78 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}طلاب الموعد{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/sheikh_dash">الصفحة الرئيسية</a></li>
+            <li><a href="/sheikh_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/sheikh_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div>
+    <section class="container">
+        <h2>طلابي</h2>
+        {%if students%}
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>الحالة</th>
+                    <th>المساق</th>
+                    <th>المعرف</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stu in students %} 
+                <tr>
+                    <td>{{stu.user.name}}</td>
+                    {%if stu.status == 'active'%}
+                    <td>نشط</td>
+                    {%elif stu.status == 'need_help'%}
+                    <td>يحتاج متابعة</td>
+                    {%else%}
+                    <td>-</td>
+                    {%endif%}
+                    <td>{{stu.track}}</td>
+                    <td><a href="https://t.me/{{stu.user.tele}}" target="_blank">@{{stu.user.tele}}</a></td>
+                    <td><a href="my_stu/{{stu.user.code}}">صفحته</a></td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <p>لا يوجد طلاب مسجلين عندكم</p>
+        {%endif%}
+    </section>
+</div>
+
+
+
+
+
+
+{% endblock %} 

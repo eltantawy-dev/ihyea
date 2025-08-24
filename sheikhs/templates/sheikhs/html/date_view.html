@@ -1,0 +1,100 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}سجل الاختبارات{% endblock %}
+
+{% block css %}<link href="{% static 'students/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/sheikh_dash">الصفحة الرئيسية</a></li>
+            <li><a href="/sheikh_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/sheikh_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="stu-date-view">
+    <section class="container">
+        <h2>اختبار الطالب {{exam.date.student.user.name}} || {{exam.date.stage}}</h2>
+        <div class="base-detail">
+            <div class="date">
+                <h4>التاريخ</h4>
+                <p>{{exam.hijriDate}}</p>
+            </div>
+            <div class="grid">
+                <div>
+                    <h4>النصاب</h4>
+                    <p>{{exam.date.nsap}}</p>
+                </div>
+                <div>
+                    <h4>الدرجة</h4>
+                    <p>{{exam.percentage}} %</p>
+                </div>
+                <div>
+                    <h4>تقدير الحفظ</h4>
+                    <p>{{exam.memorization_level}}</p>
+                </div>
+                <div>
+                    <h4>تقدير التجويد</h4>
+                    <p>{{exam.tajweed_level}}</p>
+                </div>
+            </div>
+            <div class="notes">
+                <h4>الملاحظات</h4>
+                <p>{{exam.notes}}</p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th id="num-q">رقم السؤال</th>
+                    <th>التنبيهات</th>
+                    <th>الأخطاء</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for d in degree %}
+                <tr>
+                    <td>{{d.question_number}}</td>
+                    <td class="alarm">{{d.alarm_count}}</td>
+                    <td class="mistake">{{d.mistake_count}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+
+
+
+{% endblock %} 
+{%block js%}
+<script>
+    if (window.innerWidth < 768) {
+    document.getElementById("num-q").innerHTML = "السؤال"
+}
+</script>
+{% endblock %} 

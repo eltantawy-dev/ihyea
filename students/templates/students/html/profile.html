@@ -1,0 +1,127 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block css %}<link href="{% static 'students/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/student_dash">صفحتك الرئيسية</a></li>
+            <li><a href="editprofile">تعديل الملف</a></li>
+            <li><a href="/FAQ">الأسئلة الشائعة</a></li>
+
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+    <div class="note">
+        <i class="fa-solid fa-bell" id="note-i"></i>
+        <div class="triangle" id="note-triangle"></div>
+        {% csrf_token %}
+        <ul id="note-ul">
+            {% for note in notes %}
+                <li onclick="readAndI({{note.id}})" class = "li-{{note.is_read}}-read-note" id="note-{{note.id}}">
+                    <h4>{{note.title}}</h4>
+                    <p>{{note.message}}</p>
+                    <p>{{note.hijri_created_at}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="profile">
+
+<section class="container profile-head">
+    <div class="name">
+        <i class="fa-solid fa-id-card"></i>
+        <div>
+            <h3>{{student.user.name}}</h3>
+            <p>طالب بالدفعة {{student.track.batch.name}}</p>
+            <p>{{student.t}}</p>
+        </div>
+    </div>
+    <div class="bot">
+        {% if student.user.teleid %}
+            <div>
+                <i class="fa-solid fa-circle-check"></i>
+                <p>حسابك مربوط بالبوت</p>
+            </div>
+        {%else%}
+
+            <div>
+                <a href="http://t.me/ihyeabot?start={{student.user.code}}" target="_blank">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <p class="not">حسابك غير مربوط بالبوت</p>
+                </a>
+            </div>
+
+            
+
+        {% endif %}
+    </div>
+
+</section>
+
+
+<section  class="container profile-detail">
+
+<div class="detail">
+    <div>
+        <h4>كود الحساب</h4>
+        <p>{{student.user.code}}</p>
+    </div>
+    <div>
+        <h4>البريد الإلكتروني</h4>
+        <p>{{student.user.email}}</p>
+    </div>
+    <div>
+        <h4>الرواية</h4>
+        <p>{{student.rwia}}</p>
+    </div>
+
+    <div>
+        <h4>الدولة</h4>
+        <p>{{student.country}}</p>
+    </div>
+    <div>
+        <h4>معرف التليجرام</h4>
+        <p><a href="https://t.me/{{student.user.tele}}">@{{student.user.tele}}</a></p>
+    </div>
+    <div>
+        <h4>تاريخ الميلاد</h4>
+        <p>{{student.hijri}}</p>
+    </div>
+</div>
+
+</section>
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
