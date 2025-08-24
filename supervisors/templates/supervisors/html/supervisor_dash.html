@@ -1,0 +1,180 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}لوحة المشرف{% endblock %}
+
+{% block css %}<link href="{% static 'supervisors/css/style.css' %}" rel="stylesheet">{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="student_search">بحث عن طالب</a></li>
+            <li><a href="next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="profile">الملف الشخصي</a></li>
+            <li><a href="editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+<div class="supervisor-dash">
+    <section class="container">
+        <section class="supervisor-head">
+            <h3>حياك الله {{supervisor.user.name}}</h3>
+            <div class="quote">
+                <i class="fa-solid fa-quote-right"></i>
+                <div class="text">
+                    <p>قال تعالى: </p>
+                    <p> إِنَّ ٱلَّذِينَ كَفَرُواْ سَوَآءٌ عَلَيۡهِمۡ ءَأَنذَرۡتَهُمۡ أَمۡ لَمۡ تُنذِرۡهُمۡ لَا يُؤۡمِنُونَ</p>
+                    <p>[البَقَرَةِ : 29]</p>
+                </div>
+                <i class="fa-solid fa-quote-left"></i>
+            </div>
+        </section>
+
+
+
+        <section class="supervisor-sec2">
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a href="#sheikhs" class="s-cont">
+                        <div>
+                            <p>الشيوخ</p>
+                            <p>{{all_sheikhs_count}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a href="my_students/" class="s-cont">
+                        <div>
+                            <p>إجمالي الطلاب</p>
+                            <p>{{all_stu_num}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a href="com_exam/" class="s-cont">
+                        <div>
+                            <p>الاختبارات المكتملة</p>
+                            <p>{{all_com_exams}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a href="not_com_exams/" class="s-cont">
+                        <div>
+                            <p>الاختبارات المعلقة</p>
+                            <p>{{all_not_com_exams}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-calendar-xmark"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <div class="s-cont">
+                        <div>
+                            <p>متوسط الدرجات</p>
+                            <p> 20 / {{all_avg_exams}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section class="sheikhs" id="sheikhs">
+            <h3>الشيوخ</h3>
+            <div class="sheikhs-container">
+                {%for sheikh in sheikhs%}
+                <div class="sheikh">
+                    <div class="base-info">
+                        <div class="name">
+                            <i class="fa-solid fa-user"></i>
+                            <div class="sname">
+                                <h4><a href="sheikh/{{sheikh.user.code}}" style="color: var(--main-color)">{{sheikh.user.name}}</a></h4>
+                                <p><a href="https://t.me/{{sheikh.user.tele}}" target="_blank">@{{sheikh.user.tele}}</a></p>
+                            </div>
+                        </div>
+                        <span>{{sheikh.status}}</span>
+                    </div>
+
+                    <div class="stat-sheikh">
+                        <div>
+                            <h4>{{sheikh.stu_count}}</h4>
+                            <p>طلاب</p>
+                        </div>
+
+                        <div>
+                            <h4>{{sheikh.com_exams}}</h4>
+                            <p>اختبارات مكتملة</p>
+                        </div>
+
+                            <div>
+                                <h4>{{sheikh.not_com_exams}}</h4>
+                                <p>اختبارات معلقة</p>
+                            </div>
+                        </a>
+                        <div>
+                            <h4>{{sheikh.avg_exams}}</h4>
+                            <p>متوسط الدرجات</p>
+                        </div>
+                    </div>
+
+                    <div class="sheikh-links">
+                        <a href="sheikh/{{sheikh.user.code}}/add">+ موعد</a>
+                        <a href="sheikh/{{sheikh.user.code}}/dates">المواعيد</a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+
+   </section>
+</div>
+
+
+{% endblock %}

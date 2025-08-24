@@ -1,0 +1,26 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}خطأ 500{% endblock %}
+
+
+{% block header %} 
+
+<a href="/login">
+    <button class="login-btn btn">تسجيل الدخول</button>
+</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="back">
+
+    <section class="container">
+        <div class="html-error">
+            <p>500</p>
+            <p>حدث خطأ بالخادم</p>
+        </div>
+    </section>
+</div>
+{% endblock %}

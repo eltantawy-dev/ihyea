@@ -1,0 +1,27 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}خطأ 404{% endblock %}
+
+
+{% block header %} 
+
+<a href="/login">
+    <button class="login-btn btn">تسجيل الدخول</button>
+</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="back">
+
+    <section class="container">
+        <div class="html-error">
+            <p>404</p>
+            <p>الصفحة غير موجودة</p>
+        </div>
+       
+    </section>
+</div>
+{% endblock %}

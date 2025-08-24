@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/normalize.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    {% block css %} 
+    
+    {% endblock %}
+    
+
+</head>
+<body dir="rtl">
+    
+
+
+
+<header>
+    <div class="logo">
+      <a href="/">
+        <img src="{% static 'img/Background.svg' %}" alt="">
+        <p>معهد إحياء</p>
+      </a> 
+    </div>
+    <div class="nav">
+      {% block header %} {% endblock %} 
+    </div>
+</header>
+
+<div class="head-space"></div>
+
+{% if messages %}
+  <div id="message-container">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block content %} 
+
+
+{% endblock %}
+
+<hr class="hr-footer">
+<footer>
+    <p>&COPY; معهد إحياء <span id="year"></span> , بواسطة <a href="https://t.me/MDEDAY">الطنطاوي</a></p>
+</footer>
+
+
+
+<script src="{% static 'js/index.js' %}"></script>
+
+
+{% block js %} 
+
+
+{% endblock %}
+
+</body>
+</html>

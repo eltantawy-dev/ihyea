@@ -1,0 +1,87 @@
+{% extends "html/base.html" %}
+{%load static%}
+
+
+{% block title %}معهد إحياء{% endblock title %}
+
+
+
+{% block header %} 
+<a href="/login" >
+    <button class="login-btn btn">تسجيل الدخول</button>
+</a>
+{% endblock %} 
+
+
+
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #1f2937;
+    }
+</style>
+<div class = "home-back">
+        <div class="head">
+            <img src="{% static 'img/head.png' %}" alt="img">
+            <div class="overlay"></div>
+            <div class="contain">
+                <h2>رحلتك لحفظ القرآن تبدأ من هنا</h2>
+                <a href="http://127.0.0.1:8000/login"><button>ابدأ الآن</button></a>
+            </div>
+            
+        </div>
+
+
+        <section>
+            <div class="main-homestat">
+                <div class="homestat">
+                    <div class="nm"> {{stu_active}} </div>
+                    <div class="tnm">طالب</div>
+                </div>
+                <div class="homestat">
+                    <div class="nm">{{sheikh_active}} </div>
+                    <div class="tnm">شيخ</div>
+                </div>
+                <div class="homestat">
+                    <div class="nm">{{batchs_num}}</div>
+                    <div class="tnm">دفعة</div>
+                </div>
+                <div class="homestat">
+                    <div class="nm">{{stu_graduated}}</div>
+                    <div class="tnm">متخرج</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="homecolor">
+            <div>
+                <h2>ابدأ رحلتك في حفظ القرآن</h2>
+                <a href="http://127.0.0.1:8000/login"><button>ابدأ الآن</button></a>
+            </div>
+        </section>
+
+        <section class="footbg">
+                <div>
+                    <h3>معهد إحياء للقرآن الكريم وعلومه</h3>
+                    <p>معهد إلكتروني يعنى بتعليم القرآن وتدارسه ... بالقرآن يَحيا قلبُك، بالقرآن تُؤنس دربك، بالقرآن تُنيرُ قبرك ... قرآنُك، حياتك في الدنيا والآخرة</p>
+                    <div>
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-square-twitter"></i>
+                        <i class="fa-brands fa-telegram"></i>
+                    </div>
+                </div>
+                <div class="rel">
+                    <div class="link">
+                    <h3>روابط سريعة</h3>
+                    <a href="/FAQ/">الأسئلة الشائعة</a>
+                    <a href="/contact_us">تواصل معنا</a>
+                    </div>
+                </div>
+                
+
+
+        </section>
+</div>
+{% endblock content %}

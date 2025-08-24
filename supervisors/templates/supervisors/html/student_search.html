@@ -1,0 +1,102 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}بحث عن طالب{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/next_exams/">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile/">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile/">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="back">
+    <section class="container">
+        <h2>بحث عن طالب</h2>
+
+        <input type="text" id="student_search" class="search-input">
+
+
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الحالة</th>
+                        <th>الشيخ</th>
+                        <th>المعرف</th>
+                        <th>الملف</th>
+                    </tr>
+                </thead>
+                <tbody id="stu-res">
+                    <tr>
+                        <td colspan="5">لا توجد نتائج</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </section>
+</div>
+
+
+<script>
+
+    document.getElementById("student_search").addEventListener("input", function () {
+        let q = this.value 
+        fetch(`/supervisor_dash/student_search/?q=${encodeURIComponent(q)}`)
+        .then(res => res.json() )
+        .then(data => {
+            let tbody = document.getElementById("stu-res")
+            tbody.innerHTML = ""
+
+            if (data.students.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center;">لا توجد نتائج</td>
+                    </tr>
+                `;
+            } else {
+            
+            data.students.forEach(stu => {
+                tbody.innerHTML += `
+                <tr>
+                    <td>${stu.name}</td>
+                    <td>${stu.status}</td>
+                    <td>${stu.sheikh}</td>
+                    <td><a href= "https://t.me/${stu.tele}">@${stu.tele}</a></td>
+                    <td><a href= "/supervisor_dash/stu/${stu.code}/">ملفه</a></td>
+                </tr>
+                `
+            })
+        }
+        });
+    })
+
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}تسجيل الدخول{% endblock %}
+
+{% block content %}
+
+
+<div class="login-container back">
+  <section class="container">
+    <h2>تسجيل الدخول</h2>
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        البريد الإلكتروني أو كلمة السر غير صحيحة. الرجاء المحاولة مرة أخرى.
+      </div>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <div class="alert alert-warning">
+          حسابك لا يمتلك صلاحية الوصول لهذه الصفحة.
+        </div>
+      {% else %}
+        <div class="alert alert-info">
+          الرجاء تسجيل الدخول لعرض هذه الصفحة.
+        </div>
+      {% endif %}
+    {% endif %}
+
+
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="id_username">اسم المستخدم أو البريد الإلكتروني</label>
+        {{ form.username }}
+      </div>
+
+      <div class="form-group">
+        <label for="id_password">كلمة المرور</label>
+        {{ form.password }}
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+      </div>
+
+      <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <div>
+      <a href="{% url 'password_reset' %}">نسيت كلمة المرور؟</a>
+    </div>
+
+    <div>
+      <a href="{% url 'signup' %}">إنشاء حساب جديد</a>
+    </div>
+  </section>
+</div>
+
+{% endblock %}

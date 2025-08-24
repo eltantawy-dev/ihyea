@@ -1,0 +1,25 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}إنشاء حساب جديد{% endblock %}
+
+{% block content %}
+
+<div class="signup-container">
+    <section class="container"> 
+        <h2>إنشاء حساب جديد</h2>
+
+        <form method="post">
+        {% csrf_token %}
+        {{ User_form }}
+        {{ student_form }}
+        <button type="submit">إتمام التسجيل</button>
+        </form>
+
+        <a href="/login">تسجيل الدخول</a>
+
+    </section>
+</div>
+
+
+{% endblock %}

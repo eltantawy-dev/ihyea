@@ -1,0 +1,52 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}تعديل الملف{% endblock %}
+
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="back">
+    <section class="container">
+        <form method="post">
+
+        {% csrf_token %}
+        {{edit_profile_form}}
+
+        <input type="submit" value="تعديل">
+
+        </form>
+    </section>
+</div>
+
+
+
+
+
+{% endblock %}

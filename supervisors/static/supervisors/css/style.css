@@ -1,0 +1,343 @@
+:root {
+  --main-color: #1E3A34;     
+  --secondary-color: #D1BFA7; 
+  --accent-color: #A98743;   
+  --text-color: #2E2E2E;      
+  --background-color: #F4FBF4;
+  --hover-color: #FFD700;
+  --warn-color: #e6a8a1;
+}
+
+@font-face {
+    font-family: 'Uthmanic';
+    src: url('/static/fonts/UthmanicHafs_V20.ttf') format('truetype');
+}
+
+
+.supervisor-dash {
+    background-color: var(--background-color);
+
+}
+.supervisor-dash .supervisor-head {
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+}
+.supervisor-dash .supervisor-head h3 {
+    text-align: right;
+    margin: 0 25px 25px;
+    font-size: 25px;
+}
+.supervisor-dash .supervisor-head .quote {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    width: 70%;
+    margin: auto;
+    border-radius: 8px;
+}
+.supervisor-dash .supervisor-head .quote i:first-child{
+    margin: 15px 15px 15px auto;
+}
+.supervisor-dash .supervisor-head .quote div {
+    margin: 0 25px;
+}
+.supervisor-dash .supervisor-head .quote div p {
+    font-family: 'Uthmanic';
+}
+.supervisor-dash .supervisor-head .quote div p:first-child {
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.supervisor-dash .supervisor-head .quote div p:last-child {
+    margin-top: 10px;
+    font-size: 15px;
+}
+.supervisor-dash .supervisor-head .quote i:last-child {
+    margin: 15px auto 15px 15px;
+}
+.supervisor-dash .item {
+    background-color: var(--secondary-color);
+    margin: 20px auto;
+    max-width: 350px;
+    min-width: 250px;
+    height: 100px;
+}
+
+
+
+
+
+.supervisor-sec2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    justify-content: center;
+}
+.supervisor-sec2 .sec2-items {
+    background-color: var(--secondary-color);
+    margin: 20px auto;
+    width: 50%;
+    height: 150px;
+    max-width: 300px;
+    border-radius: 8px;
+}
+.supervisor-sec2 .sec2-items .s-item {
+    padding: 0 20px;
+    margin: 52px 0;
+}
+.supervisor-sec2 .sec2-items .s-item .s-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.supervisor-sec2 .sec2-items .s-item .s-cont p:first-of-type {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+.supervisor-sec2 .sec2-items .s-item .s-cont p:last-of-type {
+    margin: 5px;
+}
+.supervisor-sec2 .sec2-items .s-item .s-cont .sec2-i {
+    background-color: var(--accent-color);
+    padding: 8px;
+    border-radius: 50%;
+}
+.supervisor-sec2 .sec2-items .s-item .s-cont .sec2-i i {
+    font-size: 22px;
+    color: var(--main-color);
+}
+
+
+.supervisor-sec2 .s-cont:hover  {
+    color: var(--hover-color);
+}
+
+
+@media (min-width: 992px) {
+    .supervisor-sec2 .sec2-items:last-child {
+    margin: 20px 75%;
+}   
+}
+
+
+
+
+.sheikhs .sheikh {
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    margin: 25px auto;
+    max-width: 80%;
+}
+.sheikhs .sheikh .base-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+.sheikhs .sheikh .base-info .name {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+.sheikhs .sheikh .base-info .name i {
+    font-size: 30px;
+    margin: auto;
+    color: var(--main-color);
+}
+.sheikhs .sheikh .base-info .name .sname {
+    overflow: hidden;
+    max-width: 35vw;
+}
+.sheikhs .sheikh .base-info .name .sname h4 {
+    text-align: right;
+}
+.sheikhs .sheikh .base-info .name .sname p {
+    text-align: right;
+}
+.sheikhs .sheikh .base-info span {
+    background: var(--secondary-color);
+    border-radius: 50%;
+    padding: 10px;
+    margin: 5px;
+    max-height: fit-content;
+}
+.sheikhs .sheikh .stat-sheikh {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.sheikhs .sheikh .stat-sheikh div {
+    padding: 15px;
+    background-color: var(--secondary-color);
+    width: 200px;
+    margin: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.sheikhs .sheikh .sheikh-links {
+    margin: auto;
+    padding: 10px 0 20px 0;
+    display: flex;
+    gap: 10px;
+}
+.sheikhs .sheikh .sheikh-links a {
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    border-radius: 8px;
+    margin: auto;
+    max-height: 100%;
+}
+
+
+
+
+
+
+.sheikh-dates h2 {
+    margin: 15px;
+}
+.sheikh-dates .add {
+    background-color: var(--main-color); 
+    padding: 10px;
+    margin: 15px 15px 25px;
+    border-radius: 8px;
+}
+
+.dates-table .date {
+    grid-area: date;
+}
+.dates-table .time {
+    grid-area: time;
+}
+.dates-table .stu-num {
+    grid-area: snum;
+}
+.dates-table .stu-remain {
+    grid-area: remain;
+}
+.dates-table .view {
+    grid-area: view;
+}
+.dates-table .edit {
+    grid-area: edit;
+}
+
+
+
+@media (max-width: 768px) {
+    .dates-table tbody tr{
+        grid-template-areas: "date date" "time time" "snum remain" "view edit";
+    }
+    .dates-table tbody tr .date{
+        font-size: 24px;
+        margin: 5px;
+        font-weight: 500;
+    }
+    .dates-table tbody tr .stu-num::before{
+        content: "الطلاب: ";
+        display: inline-block;
+    }
+    .dates-table tbody tr .stu-remain::before {
+        content: "المتاح: ";
+        display: inline-block;
+    }
+    .dates-table tbody tr .time::before {
+        content: "الوقت: ";
+        display: inline-block;
+    }
+}
+
+
+
+
+
+
+
+
+
+.next-dates-table .date {
+    grid-area: date;
+}
+.next-dates-table .time {
+    grid-area: time;
+}
+.next-dates-table .sheikh {
+    grid-area: sheikh;
+}
+.next-dates-table .stu-num {
+    grid-area: snum;
+}
+.next-dates-table .remain {
+    grid-area: remain;
+}
+.next-dates-table .stu {
+    grid-area: stu;
+}
+
+
+
+@media (max-width: 768px) {
+    .next-dates-table tbody tr{
+        grid-template-areas: "sheikh sheikh" "date date" "time time" "snum remain" "stu stu";
+    }
+    .next-dates-table tbody tr .sheikh{
+        font-size: 24px;
+        margin: 5px;
+        font-weight: 500;
+    }
+    .next-dates-table tbody tr .stu-num::before{
+        content: "الطلاب: ";
+        display: inline-block;
+    }
+    .next-dates-table tbody tr .remain::before {
+        content: "المتاح: ";
+        display: inline-block;
+    }
+    .next-dates-table tbody tr .time::before {
+        content: "الوقت: ";
+        display: inline-block;
+    }
+}
+
+
+
+.my-stu tbody .sheikh::before {
+        content: "الشيخ: ";
+        display: inline-block;
+    }
+
+.my-stu tbody .status::before {
+        content: "الحالة: ";
+        display: inline-block;
+    }
+
+
+
+
+    
+@media (max-width: 768px) {
+    .com-exam-log tbody tr {
+        grid-template-areas:
+        "hijri hijri hijri"
+        "student . score "
+        "memorization . tajweed"
+        "view view view";
+    }
+
+}
+    
+@media (max-width: 768px) {
+    .not-com-exam tbody .stu::before   {
+        content: "الطالب: ";
+        display: inline-block;
+    }
+    .not-com-exam tbody .sheikh::before   {
+        content: "الشيخ: ";
+        display: inline-block;
+    }
+
+}
+
+
+

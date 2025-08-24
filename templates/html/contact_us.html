@@ -1,0 +1,55 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+
+{% block header %} 
+
+<a href="/login">
+    <button class="login-btn btn">تسجيل الدخول</button>
+</a>
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="contact-form">
+
+    <section class="container">
+        <h2>تواصل معنا</h2>
+
+        <form method="post">
+        {% csrf_token %}
+
+
+
+        <div>
+            <label for="{{ contact_us_form.name.id_for_label }}">الاسم</label>
+            {{ contact_us_form.name }}
+            {{ contact_us_form.name.errors }}
+        </div>
+
+        <div>
+            <label for="{{ contact_us_form.email.id_for_label }}">البريد الإلكتروني</label>
+            {{ contact_us_form.email }}
+            {{ contact_us_form.email.errors }}
+        </div>
+
+        <div>
+            <label for="{{ contact_us_form.title.id_for_label }}">العنوان</label>
+            {{ contact_us_form.title }}
+            {{ contact_us_form.title.errors }}
+        </div>
+
+        <div>
+            <label for="{{ contact_us_form.message.id_for_label }}">الرسالة</label>
+            {{ contact_us_form.message.as_textarea }}
+            {{ contact_us_form.message.as_textarea.errors }}
+        </div>
+        <input class="btn" type="submit" value="إرسال">
+        </form>
+
+    </section>
+</div>
+{% endblock %}

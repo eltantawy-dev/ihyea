@@ -1,0 +1,120 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الاختبارات المكتملة{% endblock %}
+
+{% block css %}
+<link href="{% static 'sheikhs/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'supervisors/css/style.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div style="background-color: var(--background-color); min-height: calc(100vh - 50px);">
+    <section class="container">
+        <div>
+            <h2>الاختبارات المكتملة</h2>
+            <input type="text" id="search_input" class ="search-input" placeholder="ابحث عن اسم طالب ...">
+            {% if dates %}
+            <table class ="com-exam-log">
+                <thead>
+                    <tr>
+                        <th>الطالب</th>
+                        <th>التاريخ</th>
+                        <th>الدرجة</th>
+                        <th>الحفظ</th>
+                        <th>التجويد</th>
+                        <th></th>
+                        
+                    </tr>
+                </thead>
+                <tbody id="com_exams">
+                    
+                        {%for date in dates %}
+                            <tr>
+                                <td class= "student"><a href="/supervisor_dash/stu/{{date.date.student.user.code}}">{{date.date.student.user.name}} </a></td>
+                                <td class= "hijri-date">{{date.hijri}}</td>
+                                <td class= "score">{{date.score}}</td>
+                                <td class= "memorization">{{date.memorization_level}}</td>
+                                <td class= "tajweed">{{date.tajweed_level}}</td>
+                                <td class= "view"><a href="/supervisor_dash/date/{{date.date.date.id}}/{{date.date.student.user.code}}">تعديل</a></td>
+                            </tr>
+                        {% endfor %}
+                    
+                </tbody>
+            </table>
+            {%else%}
+                <p>لا توجد مواعيد مكتملة</p>        
+            {% endif %}
+        </div>
+
+    </section>
+</div>
+
+<script>
+    document.getElementById("search_input").addEventListener("input", function () {
+        let quary = this.value;
+
+        fetch(`/supervisor_dash/com_exam?q=${encodeURIComponent(quary)}`)
+        .then(res => res.json())
+        .then(data => {
+            let tbody = document.getElementById("com_exams");
+            tbody.innerHTML = ""
+
+            if (data.results.length === 0) {
+                tbody.innerHTML = `<tr>
+                    <td colspan = "4" >لا توجد مواعيد لهذا الطالب</td>
+                </tr>`;
+            }
+
+            else {
+            data.results.forEach(item => {
+                let row = `<tr>
+                    <td>${item.name}</td>
+                    <td>${item.date}</td>
+                    <td>${item.score}</td>
+                    <td>${item.memorization_level}</td>
+                    <td>${item.tajweed_level}</td>
+                    <td><a href = "date/${item.id}/${item.code}">تعديل</a></td>
+                </tr>`;
+                tbody.innerHTML += row
+            })
+        }
+        })
+    })
+
+
+</script>
+
+
+
+{% endblock %} 

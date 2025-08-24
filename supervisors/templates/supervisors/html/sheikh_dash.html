@@ -1,0 +1,110 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}ملف الشيخ{% endblock %}
+{% block css %}
+<link href="{% static 'students/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+
+<div class="profile">
+
+
+    <section class="container profile-head">
+        <div class="name">
+            <div>
+            
+
+                <h3>الشيخ {{sheikh.user.name}}</h3>
+            </div>
+        </div>
+        <div class="bot">
+            {% if sheikh.user.teleid %}
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <p>حسابه مربوط بالبوت</p>
+                </div>
+            {%else%}
+
+                <div>
+                    <a href="http://t.me/ihyeabot?start={{sheikh.user.code}}" target="_blank">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <p class="not">حسابه غير مربوط بالبوت</p>
+                    </a>
+                </div>
+
+                
+
+            {% endif %}
+        </div>
+
+    </section>
+
+
+    <section  class="container profile-detail">
+
+    <div class="detail">
+        <div>
+            <h4>كود الحساب</h4>
+            <p>{{sheikh.user.code}}</p>
+        </div>
+        <div>
+            <h4>البريد الإلكتروني</h4>
+            <p>{{sheikh.user.email}}</p>
+        </div>
+        <div>
+            <h4>الرواية</h4>
+            <p>{{sheikh.rwia}}</p>
+        </div>
+
+        <div>
+            <h4>الدولة</h4>
+            <p>{{sheikh.country}}</p>
+        </div>
+        <div>
+            <h4>معرف التليجرام</h4>
+            <p><a href="https://t.me/{{sheikh.user.tele}}">@{{sheikh.user.tele}}</a></p>
+        </div>
+        <div>
+            <h4>تاريخ الميلاد</h4>
+            <p>{{sheikh.hijri}}</p>
+        </div>
+    </div>
+
+    </section>
+
+
+</div>
+
+
+
+{% endblock %}
