@@ -1,0 +1,116 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+{% block css %}
+<link href="{% static 'students/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/followup_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/followup_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/followup_dash/profile">الملف الشخصي</a></li>
+
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+<div class="profile">
+<section class="container profile-head">
+    <div class="name">
+        <div>
+           
+
+            <h3>{{followup.user.name}}</h3>
+        </div>
+    </div>
+    <div class="bot">
+        {% if followup.user.teleid %}
+            <div>
+                <i class="fa-solid fa-circle-check"></i>
+                <p>حسابك مربوط بالبوت</p>
+            </div>
+        {%else%}
+
+            <div>
+                <a href="http://t.me/ihyeabot?start={{followup.user.code}}" target="_blank">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <p class="not">حسابك غير مربوط بالبوت</p>
+                </a>
+            </div>
+
+            
+
+        {% endif %}
+    </div>
+
+</section>
+
+
+<section  class="container profile-detail">
+
+<div class="detail">
+    <div>
+        <h4>كود الحساب</h4>
+        <p>{{followup.user.code}}</p>
+    </div>
+    <div>
+        <h4>البريد الإلكتروني</h4>
+        <p>{{followup.user.email}}</p>
+    </div>
+
+    <div>
+        <h4>الدولة</h4>
+        <p>{{followup.country}}</p>
+    </div>
+    <div>
+        <h4>معرف التليجرام</h4>
+        <p><a href="https://t.me/{{followup.user.tele}}">@{{followup.user.tele}}</a></p>
+    </div>
+    <div>
+        <h4>تاريخ الميلاد</h4>
+        <p>{{followup.hijri}}</p>
+    </div>
+</div>
+
+</section>
+
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

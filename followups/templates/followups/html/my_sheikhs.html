@@ -1,0 +1,127 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}طلابي{% endblock %}
+
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/followup_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/followup_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/followup_dash/profile">الملف الشخصي</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="back">
+    <section class="container">
+        <h2>الشيوخ</h2>
+        <section>
+            <a href="add/" class ="add">إضافة شيخ</a>
+            <input type="text" id="student_search" class ="search-input">
+        </section>
+
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>المشرف</th>
+                        <th>الحالة</th>
+                        <th>الرواية</th>
+                        <th>التليجرام</th>
+                    </tr>
+                </thead>
+                <tbody id="stu-res">
+                    {% for sheikh in sheikhs %}
+                    <tr>
+                        <td style="grid-area: name;"><a href= "/followup_dash/sheikh/{{sheikh.user.code}}/">الشيخ {{sheikh.user.name}}</a></td>
+                        <td class ="supervisor" style="grid-area: supervisor;">{{sheikh.supervisor.user.name}}</td>
+                        <td class ="status" style="grid-area: status;"> {{sheikh.status}}</td>
+                        <td class ="rwia" style="grid-area: rwia;"> {{sheikh.rwia}}</td>
+                        <td style="grid-area: tele;"><a href="https://t.me/{{sheikh.user.tele}}" target="_blank"><i class="fa-brands fa-telegram" style=" font-size: 25px; color: var(--main-color);"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </section>
+</div>
+
+
+<style>
+    @media (max-width: 768px) {
+    tbody tr {
+        grid-template-areas:
+        "name rwia"
+        "status tele"
+    }
+    .supervisor   {
+        display: none;
+    }
+    .status::before   {
+        content: "الحالة: ";
+        display: inline-block;
+    }
+    .rwia::before   {
+        content: "الرواية: ";
+        display: inline-block;
+    }
+}
+</style>
+
+
+<script>
+    document.getElementById("student_search").addEventListener("input", function () {
+        let q = this.value 
+        fetch(`/followup_dash/my_sheikhs/?q=${encodeURIComponent(q)}`)
+        .then(res => res.json() )
+        .then(data => {
+            let tbody = document.getElementById("stu-res")
+            tbody.innerHTML = ""
+
+            if (data.sheikhs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center;">لا توجد نتائج</td>
+                    </tr>
+                `;
+            } else {
+            
+            data.sheikhs.forEach(sheikh => {
+                tbody.innerHTML += `
+                <tr>
+                    <td style="grid-area: name;"><a href= "/followup_dash/sheikh/${sheikh.code}/" target="_blank">${sheikh.name}</a></td>
+                    <td class ="supervisor" style="grid-area: supervisor;">${sheikh.supervisor}</td>
+                    <td class ="status" style="grid-area: status;">${sheikh.status}</td>
+                    <td class ="rwia" style="grid-area: rwia;">${sheikh.rwia}</td>
+                    <td style="grid-area: tele;"><a href= "https://t.me/${sheikh.tele}" target="_blank">@${sheikh.tele}</a></td>
+                </tr>
+                `
+            })
+        }
+        });
+    })
+
+</script>
+
+{% endblock %}

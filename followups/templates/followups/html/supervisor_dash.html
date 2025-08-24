@@ -1,0 +1,231 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}ملف {% endblock %}
+
+{% block css %}<link href="{% static 'supervisors/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'students/css/style.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+
+
+
+
+
+<div class="profile">
+    <section class="container profile-head">
+        <div class="name">
+            <div>
+            
+
+                <h3>المشرف {{supervisor.user.name}}</h3>
+            </div>
+        </div>
+        <div class="bot">
+            {% if supervisor.user.teleid %}
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <p>حسابه مربوط بالبوت</p>
+                </div>
+            {%else%}
+
+                <div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <p class="not">حسابه غير مربوط بالبوت</p>
+                </div>
+
+                
+
+            {% endif %}
+        </div>
+
+    </section>
+
+
+    <section  class="container profile-detail">
+
+        <div class="detail">
+            <div>
+                <h4>البريد الإلكتروني</h4>
+                <p>{{supervisor.user.email}}</p>
+            </div>
+
+            <div>
+                <h4>الدولة</h4>
+                <p>{{supervisor.country}}</p>
+            </div>
+            <div>
+                <h4>معرف التليجرام</h4>
+                <p><a href="https://t.me/{{supervisor.user.tele}}">@{{supervisor.user.tele}}</a></p>
+            </div>
+            <div>
+                <h4>تاريخ الميلاد</h4>
+                <p>{{supervisor.hijri}}</p>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+
+<hr>
+
+
+    <section class="supervisor-sec2">
+
+        <div class="sec2-items">
+            <div class="s-item">
+                <a href="#sheikhs" class="s-cont">
+                    <div>
+                        <p>الشيوخ</p>
+                        <p>{{sheikhs.count}}</p>
+                    </div>
+                    <div class="sec2-i">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="sec2-items">
+            <div class="s-item">
+                <a class="s-cont">
+                    <div>
+                        <p>إجمالي الطلاب</p>
+                        <p>{{supervisor.stu_num}}</p>
+                    </div>
+                    <div class="sec2-i">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="sec2-items">
+            <div class="s-item">
+                <a class="s-cont">
+                    <div>
+                        <p>الاختبارات المكتملة</p>
+                        <p>{{supervisor.complete_exam}}</p>
+                    </div>
+                    <div class="sec2-i">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="sec2-items">
+            <div class="s-item">
+                <a class="s-cont">
+                    <div>
+                        <p>الاختبارات المعلقة</p>
+                        <p>{{supervisor.not_complete_exam}}</p>
+                    </div>
+                    <div class="sec2-i">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="sec2-items" style = "margin: 20px auto;">
+            <div class="s-item">
+                <div class="s-cont">
+                    <div>
+                        <p>متوسط الدرجات</p>
+                        <p> 20 / {{supervisor.average_score}}</p>
+                    </div>
+                    <div class="sec2-i">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+        <section class="sheikhs" id="sheikhs">
+            <h3>الشيوخ</h3>
+            <div class="sheikhs-container">
+                {%for sheikh in sheikhs%}
+                <div class="sheikh">
+                    <div class="base-info">
+                        <div class="name">
+                            <i class="fa-solid fa-user"></i>
+                            <div class="sname">
+                                <h4><a href="sheikh/{{sheikh.user.code}}" style="color: var(--main-color)">الشيخ {{sheikh.user.name}}</a></h4>
+                                <p><a href="https://t.me/{{sheikh.user.tele}}" target="_blank">@{{sheikh.user.tele}}</a></p>
+                            </div>
+                        </div>
+                        <span>{{sheikh.status}}</span>
+                    </div>
+
+                    <div class="stat-sheikh">
+                        <div>
+                            <h4>{{sheikh.stu_count}}</h4>
+                            <p>طلاب</p>
+                        </div>
+
+                        <div>
+                            <h4>{{sheikh.com_exams}}</h4>
+                            <p>اختبارات مكتملة</p>
+                        </div>
+
+                            <div>
+                                <h4>{{sheikh.not_com_exams}}</h4>
+                                <p>اختبارات معلقة</p>
+                            </div>
+                        </a>
+                        <div>
+                            <h4>{{sheikh.avg_exams}}</h4>
+                            <p>متوسط الدرجات</p>
+                        </div>
+                    </div>
+
+                    <div class="sheikh-links">
+                        <a href= "/followup_dash/sheikh/{{sheikh.user.code}}/">ملفه</a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </section>
+
+
+<h2></h2>
+
+
+{% endblock %}

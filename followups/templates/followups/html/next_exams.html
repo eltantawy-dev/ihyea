@@ -1,0 +1,97 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}المواعيد المتاحة{% endblock %}
+{% block css %}
+<link href="{% static 'supervisors/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/followup_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/followup_dash/profile">الملف الشخصي</a></li>
+
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+
+
+
+
+<div class="back">
+    <section class="container">
+        <h2>المواعيد القادمة</h2>
+        {% if dates %}
+        <table class="next-dates-table">
+            <thead>
+                <tr>
+                    <th>التاريخ</th>
+                    <th>التوقيت</th>
+                    <th>الشيخ</th>
+                    <th>المشرف</th>
+                    <th>الطلاب</th>
+                    <th>المتاح</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                    {%for date in dates %}
+                        <tr>
+                            <td class="date">{{date.hijri}}</td>
+                            <td class="time">{{date.from_hour}}-{{date.to_hour}}</td>
+                            <td class="sheikh">{{date.sheikh.user.name}}</td>
+                            <td class="supervisor">{{date.sheikh.supervisor.user.name}}</td>
+                            <td class="stu-num"> {{date.student_num}}</td>
+                            <td class="remain"> {{date.remain}}</td>
+                           <td class="stu"><a href="/followup_dash/sheikh/{{date.sheikh.user.code}}/date/{{date.id}}">الطلاب</a></td>
+                        </tr>
+                    {% endfor %}
+                
+            </tbody>
+        </table>
+        {%else%}
+            <p>لا توجد مواعيد متاحة</p>
+        {% endif %}
+  
+
+    </section>
+</div>
+
+
+<style>
+    @media (max-width: 768px) {
+    .supervisor   {
+        display: none;
+    }
+}
+</style>
+                    
+
+
+
+
+
+
+{% endblock %}

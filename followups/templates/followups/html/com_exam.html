@@ -1,0 +1,120 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}الاختبارات المكتملة{% endblock %}
+
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/followup_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/followup_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/followup_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/followup_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+<section>
+    <div>
+        <h3>الاختبارات المكتملة</h3>
+        <input type="text" id="search_input" placeholder="ابحث عن اسم طالب ...">
+        <table>
+            <thead>
+                <tr>
+                    <td>الطالب</td>
+                    <td>الشيخ</td>
+                    <td>التاريخ</td>
+                    <td>الدرجة</td>
+                    <td>الحفظ</td>
+                    <td>التجويد</td>
+                </tr>
+            </thead>
+            <tbody id="com_exams">
+                {% if dates %}
+                    {%for date in dates %}
+                        <tr>
+                            <td>{{date.student.user.name}}</td>
+                            <td>{{date.student.sheikh.user.name}}</td>
+                            <td>{{date.hijri}}</td>
+                            <td>{{date.score}}</td>
+                            <td>{{date.memorization_level}}</td>
+                            <td>{{date.tajweed_level}}</td>
+                            <td><a href="/followup_dash/date/{{date.date.date.id}}/{{date.student.user.code}}">تعديل</a></td>
+                        </tr>
+                    {% endfor %}
+                {%else%}
+                <tr>
+                    <td>
+                        لا توجد مواعيد مكتملة
+                    </td>
+                </tr>
+                        
+                {% endif %}
+            </tbody>
+        </table>
+
+    </div>
+
+</section>
+
+
+<script>
+    document.getElementById("search_input").addEventListener("input", function () {
+        let quary = this.value;
+
+        fetch(`/followup_dash/com_exam?q=${encodeURIComponent(quary)}`)
+        .then(res => res.json())
+        .then(data => {
+            let tbody = document.getElementById("com_exams");
+            tbody.innerHTML = ""
+
+            if (data.results.length === 0) {
+                tbody.innerHTML = `<tr>
+                    <td colspan = "4" >لا توجد مواعيد لهذا الطالب</td>
+                </tr>`;
+            }
+
+            else {
+            data.results.forEach(item => {
+                let row = `<tr>
+                    <td>${item.name}</td>
+                    <td>${date.student.sheikh.user.name}</td>
+                    <td>${item.date}</td>
+                    <td>${item.score}</td>
+                    <td>${item.memorization_level}</td>
+                    <td>${item.tajweed_level}</td>
+                    <td><a href = "date/${item.id}/${item.code}">تعديل</a></td>
+                </tr>`;
+                tbody.innerHTML += row
+            })
+        }
+        })
+    })
+
+
+</script>
+
+
+
+{% endblock %} 

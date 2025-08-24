@@ -1,0 +1,125 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}طلابي{% endblock %}
+
+
+{% block header %} 
+
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/followup_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/followup_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/followup_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/followup_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+<div class="back">
+    <section class="container">
+        <h2>الطلاب</h2>
+        <section>
+            <a href="add/" class = "add">إضافة طالب</a>
+            <input type="text" id="student_search" class="search-input">
+        </section>
+
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الاسم</th>
+                        <th>الحالة</th>
+                        <th>الشيخ</th>
+                        <th>المعرف</th>
+                    </tr>
+                </thead>
+                <tbody id="stu-res">
+                    {% for stu in students %}
+                    <tr>
+                        <td style="grid-area: name;"><a href= "/followup_dash/stu/{{stu.user.code}}/">{{stu.user.name}}</a></td>
+                        <td style="grid-area: status;">{{stu.status}}</td>
+                        <td class ="sheikh" style="grid-area: sheikh;"> {{stu.sheikh.user.name}}</td>
+                        <td style="grid-area: tele;"><a href="https://t.me/{{stu.user.tele}}" target="_blank"><i class="fa-brands fa-telegram" style=" font-size: 25px; color: var(--main-color);"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </section>
+</div>
+
+
+
+<style>
+    @media (max-width: 768px) {
+    tbody tr {
+        grid-template-areas:
+        "name status"
+        "sheikh tele"
+    }
+    .supervisor   {
+        display: none;
+    }
+    .sheikh::before   {
+        content: "الشيخ: ";
+        display: inline-block;
+    }
+}
+</style>
+
+
+
+
+
+<script>
+    document.getElementById("student_search").addEventListener("input", function () {
+        let q = this.value 
+        fetch(`/followup_dash/my_students/?q=${encodeURIComponent(q)}`)
+        .then(res => res.json() )
+        .then(data => {
+            let tbody = document.getElementById("stu-res")
+            tbody.innerHTML = ""
+
+            if (data.students.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align: center;">لا توجد نتائج</td>
+                    </tr>
+                `;
+            } else {
+            
+            data.students.forEach(stu => {
+                tbody.innerHTML += `
+                <tr>
+                    <td style="grid-area: name;"><a href= "/followup_dash/stu/${stu.code}/">${stu.name}</a></td>
+                    <td style="grid-area: status;">${stu.status}</td>
+                    <td class ="sheikh" style="grid-area: sheikh;">${stu.sheikh}</td>
+                    <td style="grid-area: tele;"><a href="https://t.me/${stu.tele}" target="_blank"><i class="fa-brands fa-telegram" style=" font-size: 25px; color: var(--main-color);"></i></a></td>
+                </tr>
+                `
+            })
+        }
+        });
+    })
+
+</script>
+
+{% endblock %}

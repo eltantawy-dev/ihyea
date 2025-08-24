@@ -1,0 +1,244 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}ملف الشيخ{% endblock %}
+
+{% block css %}
+<link href="{% static 'supervisors/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'students/css/style.css' %}" rel="stylesheet">
+<link href="{% static 'sheikhs/css/style.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+
+
+
+
+
+
+
+
+<div class="profile">
+    <section class="container profile-head">
+        <div class="name">
+            <div>
+            
+
+                <h3>الشيخ {{sheikh.user.name}}</h3>
+            </div>
+        </div>
+        <div class="bot">
+            {% if sheikh.user.teleid %}
+                <div>
+                    <i class="fa-solid fa-circle-check"></i>
+                    <p>حسابه مربوط بالبوت</p>
+                </div>
+            {%else%}
+
+                <div>
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <p class="not">حسابه غير مربوط بالبوت</p>
+                </div>
+
+                
+
+            {% endif %}
+        </div>
+
+    </section>
+
+
+    <section  class="container profile-detail">
+
+        <div class="detail">
+            <div>
+                <h4>المشرف</h4>
+                <p>{{sheikh.supervisor.user.name}}</p>
+            </div>
+            <div>
+                <h4>الرواية</h4>
+                <p>{{sheikh.rwia}}</p>
+            </div>
+            <div>
+                <h4>البريد الإلكتروني</h4>
+                <p>{{sheikh.user.email}}</p>
+            </div>
+
+            <div>
+                <h4>الدولة</h4>
+                <p>{{sheikh.country}}</p>
+            </div>
+            <div>
+                <h4>معرف التليجرام</h4>
+                <p><a href="https://t.me/{{sheikh.user.tele}}">@{{sheikh.user.tele}}</a></p>
+            </div>
+            <div>
+                <h4>تاريخ الميلاد</h4>
+                <p>{{sheikh.hijri}}</p>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+
+
+<hr>
+
+
+
+
+
+<div class="sheikh-dash">
+    <section class="containar">
+        <section class="sheikh-sec2">
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a class="s-cont">
+                        <div>
+                            <p>الطلاب</p>
+                            <p>{{sheikh.stu_num}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a class="s-cont">
+                        <div>
+                            <p>يحتاجون متابعة</p>
+                            <p>{{sheikh.need_help_num}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a class="s-cont">
+                        <div>
+                            <p>الاختبارات المكتملة</p>
+                            <p>{{sheikh.complete_exam}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <a class="s-cont">
+                        <div>
+                            <p>الاختبارات المعلقة</p>
+                            <p>{{sheikh.not_complete_exam}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-check-double"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sec2-items">
+                <div class="s-item">
+                    <div class="s-cont">
+                        <div>
+                            <p>متوسط الدرجات</p>
+                            <p> 20 / {{sheikh.average_score}}</p>
+                        </div>
+                        <div class="sec2-i">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+        <hr>
+
+
+        <section>
+            <div>
+                <h2>الاختبارات القادمة</h2>
+                {% if next_sheikh_dates %}
+                <table class="dates-table">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>التوقيت</th>
+                            <th>الطلاب</th>
+                            <th>المتاح</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {%for date in next_sheikh_dates %}
+                        <tr>
+                            <td class="date">{{date.hijri}}</td>
+                            <td class="time"> {{date.from_hour}}-{{date.to_hour}}</td>
+                            <td class="stu-num"> {{date.student_num}}</td>
+                            <td class="stu-remain"> {{date.remain}}</td>
+                            <td class="stu"><a href="date/{{date.id}}">الطلاب</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {%else%}
+                    <p style="padding-bottom: 35px;">لا توجد مواعيد قادمة</p>
+                {% endif %}
+            </div>
+        </section>
+
+   </section>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "html/base.html" %}
+{% load static %}
+
+{% block title %}طلاب الموعد{% endblock %}
+
+
+{% block header %} 
+
+<div>
+    <div class="menu-i">
+        <i class="fa-solid fa-bars" id="menu-nav-i"></i>
+        <div class="triangle" id="profile-triangle"></div>
+        <ul id="menu-nav">
+            <li><a href="/supervisor_dash/student_search">بحث عن طالب</a></li>
+            <li><a href="/supervisor_dash/next_exams">الاختبارات المتاحة</a></li>
+            <li><a href="/supervisor_dash/profile">الملف الشخصي</a></li>
+            <li><a href="/supervisor_dash/editprofile">تعديل الملف</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">
+                    تسجيل الخروج
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+{% endblock %} 
+
+
+{% block content %}
+
+
+<div class="stu-res back">
+    <section class="container">
+        <h2>نتيجة الطالب <a href="/supervisor_dash/stu/{{student.user.code}}">{{student.user.name}} </a></h2>
+
+        <form method="post">
+            {% csrf_token %}
+                {{stu_res_form}}
+                {{ stu_que_form.management_form }}
+                <table class="que-table">
+                    <thead>
+                        <tr>
+                            <th>رقم السؤال</th>
+                            <th>التنبيهات</th>
+                            <th>الأخطاء</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in stu_que_form %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ form.alarm_count }}</td>
+                            <td>{{ form.mistake_count }}</td>
+
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>  
+
+            <input type="submit" value="تسجيل">
+        </form>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %} 
