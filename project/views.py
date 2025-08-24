@@ -18,8 +18,10 @@ def generate_code():
 
 
 
+BOT_TOKEN = ""
+
 def send_by_bot(chat_id, message):
-    bot_token = '6976351714:AAHJmy1bnAJGxHVYAeEJBYANMuuROzJxIQg'
+    bot_token = BOT_TOKEN
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     data = {
         'chat_id': chat_id,
@@ -190,6 +192,7 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'html/500.html', status=500)
+
 
 
 
